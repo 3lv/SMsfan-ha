@@ -143,11 +143,7 @@ class Number(NumberEntity):
 
     def set_native_value(self, value):
         try:
-            d = self._SM_set(self._chan, value)
-            _LOGGER.error("%f => %f", value, d);
-            value = 0
-            d = self._SM_set(self._chan, value)
-            _LOGGER.error("%f => %f", value, d);
+            self._SM_set(self._chan, int(value))
         except Exception as ex:
             _LOGGER.error(DOMAIN + " %s setting value failed, %e", self._type, ex)
 
