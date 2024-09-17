@@ -89,15 +89,19 @@ class Number(NumberEntity):
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
             if self._step == int(self._step):
+                _LOGGER.error("step is integer")
                 if len(signature(_SM_set).parameters) == 2:
+                    _LOGGER.error("function got rewritten")
                     def _aux3_SM_set(_, value):
                         return _SM_set(self._stack, int(value))
                     self._SM_set = _aux3_SM_set
                 else:
+                    _LOGGER.error("function got badly")
                     def _aux_SM_set(chan, value):
                         return _SM_set(self._stack, chan, int(value))
                     self._SM_set = _aux_SM_set
             else:
+                _LOGGER.error("step is not integer")
                 if len(signature(_SM_set).parameters) == 2:
                     def _aux3_SM_set(_, value):
                         return _SM_set(self._stack, value)
