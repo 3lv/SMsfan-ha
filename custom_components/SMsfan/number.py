@@ -93,9 +93,8 @@ class Number(NumberEntity):
                 def _aux3_SM_set(_, *args):
                     return _SM_set(self._stack, *args)
                 self._SM_set = _aux3_SM_set
-                d1 = self._SM_set(1, 100)
-                d2 = getattr(self._SM, com["set"])(0, 100)
-                _LOGGER.error("%d %d", d1, d2)
+                d1 = self._SM_set(1, 0)
+                _LOGGER.error("%d %d", d1)
             else:
                 def _aux_SM_set(*args):
                     return _SM_set(self._stack, *args)
