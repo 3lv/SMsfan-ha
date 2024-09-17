@@ -78,12 +78,24 @@ class Number(NumberEntity):
                     getattr(self, com["set"])(value)
                 self._SM_set = types.MethodType(_aux2_SM_set, self._SM)
         else:
-            def _aux_SM_get(*args):
-                return getattr(self._SM, com["get"])(self._stack, *args)
-            self._SM_get = _aux_SM_get
-            def _aux_SM_set(*args):
-                return getattr(self._SM, com["set"])(self._stack, *args)
-            self._SM_set = _aux_SM_set
+            _SM_get = getattr(self._SM, com["get"])
+            if len(signature(_SM_get).parameters) == 1:
+                def _aux3_SM_get(_, *args):
+                    return _SM_get(self._stack, *args)
+                self._SM_get = _aux3_SM_get
+            else:
+                def _aux_SM_get(*args):
+                    return _SM_get(self._stack, *args)
+                self._SM_get = _aux_SM_get
+            _SM_set = getattr(self._SM, com["set"])
+            if len(signature(_SM_set).parameters) == 1:
+                def _aux3_SM_set(_, *args):
+                    return _SM_set(self._stack, *args)
+                self._SM_set = _aux3_SM_set
+            else:
+                def _aux_SM_set(*args):
+                    return _SM_set(self._stack, *args)
+                self._SM_set = _aux_SM_set
 
     def update(self):
         time.sleep(self._short_timeout)
