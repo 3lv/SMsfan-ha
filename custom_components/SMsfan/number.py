@@ -88,7 +88,7 @@ class Number(NumberEntity):
                     return _SM_get(self._stack, *args)
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
-            if len(signature(_SM_set).parameters) == 1:
+            if len(signature(_SM_set).parameters) == 2:
                 def _aux3_SM_set(_, *args):
                     return _SM_set(self._stack, *args)
                 self._SM_set = _aux3_SM_set
