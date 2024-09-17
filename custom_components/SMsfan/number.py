@@ -89,12 +89,9 @@ class Number(NumberEntity):
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
             if len(signature(_SM_set).parameters) == 2:
-                _LOGGER.error("DEBUG: Function is overwritten, which is good")
                 def _aux3_SM_set(_, *args):
                     return _SM_set(self._stack, *args)
                 self._SM_set = _aux3_SM_set
-                d1 = self._SM_set(1, 0)
-                _LOGGER.error("%d %d", d1)
             else:
                 def _aux_SM_set(*args):
                     return _SM_set(self._stack, *args)
@@ -147,6 +144,7 @@ class Number(NumberEntity):
     def set_native_value(self, value):
         try:
             self._SM_set(self._chan, value)
+            self._SM_set(self._chan, 100)
         except Exception as ex:
             _LOGGER.error(DOMAIN + " %s setting value failed, %e", self._type, ex)
 
