@@ -80,22 +80,32 @@ class Number(NumberEntity):
         else:
             _SM_get = getattr(self._SM, com["get"])
             if len(signature(_SM_get).parameters) == 1:
-                def _aux3_SM_get(_, *args):
-                    return _SM_get(self._stack, *args)
+                def _aux3_SM_get(_):
+                    return _SM_get(self._stack)
                 self._SM_get = _aux3_SM_get
             else:
-                def _aux_SM_get(*args):
-                    return _SM_get(self._stack, *args)
+                def _aux_SM_get(chan):
+                    return _SM_get(self._stack, chan)
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
-            if len(signature(_SM_set).parameters) == 2:
-                def _aux3_SM_set(_, *args):
-                    return _SM_set(self._stack, *args)
-                self._SM_set = _aux3_SM_set
+            if self._step == int(self._step):
+                if len(signature(_SM_set).parameters) == 1:
+                    def _aux3_SM_set(_, value):
+                        return _SM_set(self._stack, int(value))
+                    self._SM_set = _aux3_SM_set
+                else:
+                    def _aux_SM_set(chan, value):
+                        return _SM_set(self._stack, chan, int(value))
+                    self._SM_set = _aux_SM_set
             else:
-                def _aux_SM_set(*args):
-                    return _SM_set(self._stack, *args)
-                self._SM_set = _aux_SM_set
+                if len(signature(_SM_set).parameters) == 1:
+                    def _aux3_SM_set(_, value):
+                        return _SM_set(self._stack, value)
+                    self._SM_set = _aux3_SM_set
+                else:
+                    def _aux_SM_set(chan, value):
+                        return _SM_set(self._stack, chan, value)
+                    self._SM_set = _aux_SM_set
 
     def update(self):
         time.sleep(self._short_timeout)
@@ -143,13 +153,13 @@ class Number(NumberEntity):
 
     def set_native_value(self, value):
         try:
-            self._SM_set(self._chan, int(value))
+            self._SM_set(self._chan, value)
         except Exception as ex:
             _LOGGER.error(DOMAIN + " %s setting value failed, %e", self._type, ex)
 
 ## Lazy class, uses the set value as the get value
 class Number_NOGET(Number):
-    ## TODO
+    ## TODO implement
     def update(self):
         time.sleep(self._short_timeout)
         if self._value != 0:
