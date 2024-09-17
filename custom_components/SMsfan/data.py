@@ -9,7 +9,7 @@ SM_MAP = {
                 "uom": "%",
                 "min_value": 0.0,
                 "max_value": 100.0,
-                "step": 1,
+                "step": 1.0,
                 "com": {
                     "get": "getPower",
                     "set": "setPower"
