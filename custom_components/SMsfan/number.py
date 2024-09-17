@@ -89,7 +89,7 @@ class Number(NumberEntity):
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
             if self._step == int(self._step):
-                if len(signature(_SM_set).parameters) == 1:
+                if len(signature(_SM_set).parameters) == 2:
                     def _aux3_SM_set(_, value):
                         return _SM_set(self._stack, int(value))
                     self._SM_set = _aux3_SM_set
@@ -98,7 +98,7 @@ class Number(NumberEntity):
                         return _SM_set(self._stack, chan, int(value))
                     self._SM_set = _aux_SM_set
             else:
-                if len(signature(_SM_set).parameters) == 1:
+                if len(signature(_SM_set).parameters) == 2:
                     def _aux3_SM_set(_, value):
                         return _SM_set(self._stack, value)
                     self._SM_set = _aux3_SM_set
