@@ -11,7 +11,6 @@ SM_MAP = {
                 "max_value": 100.0,
                 "step": 1,
                 "com": {
-                    #"get": "__NOGET__",
                     "get": "getPower",
                     "set": "setPower"
                 },

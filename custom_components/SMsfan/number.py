@@ -89,9 +89,13 @@ class Number(NumberEntity):
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
             if len(signature(_SM_set).parameters) == 2:
+                _LOGGER.error("DEBUG: Function is overwritten, which is good")
                 def _aux3_SM_set(_, *args):
                     return _SM_set(self._stack, *args)
                 self._SM_set = _aux3_SM_set
+                d1 = self._SM_set(1, 100)
+                d2 = getattr(self._SM, com["set"])(0, 100)
+                _LOGGER.error("%d %d", d1, d2)
             else:
                 def _aux_SM_set(*args):
                     return _SM_set(self._stack, *args)
