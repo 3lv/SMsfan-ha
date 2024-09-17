@@ -61,6 +61,7 @@ class Number(NumberEntity):
         self._value = 0
         self.__SM__init()
 
+    ### Make API compatible if channel is not used or if it requires integer value
     def __SM__init(self):
         com = SM_MAP[self._type]["com"]
         self._SM = SM_API
@@ -68,7 +69,6 @@ class Number(NumberEntity):
             self._SM = self._SM(self._stack)
             self._SM_get = getattr(self._SM, com["get"])
             self._SM_set = getattr(self._SM, com["set"])
-            ### Make API compatible if channel is not used (_)
             if len(signature(self._SM_get).parameters) == 0:
                 def _aux2_SM_get(self, _):
                     return getattr(self, com["get"])()
@@ -89,19 +89,15 @@ class Number(NumberEntity):
                 self._SM_get = _aux_SM_get
             _SM_set = getattr(self._SM, com["set"])
             if self._step == int(self._step):
-                _LOGGER.error("step is integer")
                 if len(signature(_SM_set).parameters) == 2:
-                    _LOGGER.error("function got rewritten")
                     def _aux3_SM_set(_, value):
                         return _SM_set(self._stack, int(value))
                     self._SM_set = _aux3_SM_set
                 else:
-                    _LOGGER.error("function got badly")
                     def _aux_SM_set(chan, value):
                         return _SM_set(self._stack, chan, int(value))
                     self._SM_set = _aux_SM_set
             else:
-                _LOGGER.error("step is not integer")
                 if len(signature(_SM_set).parameters) == 2:
                     def _aux3_SM_set(_, value):
                         return _SM_set(self._stack, value)
