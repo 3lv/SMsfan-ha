@@ -1,0 +1,13 @@
+{
+	"domain": "SMsfan",
+	"name": "Sequent Microsystems Smart Fan Integraion",
+	"version": "v1.0.0",
+	"integration_type": "device",
+	"documentation": "https://github.com/SequentMicrosystems",
+	"issue_tracker": "https://github.com/SequentMicrosystems",
+	"dependencies": [],
+	"after_dependencies": [],
+	"codeownders": ["3lv"],
+	"config_flow": false,
+	"requirements": ["SMsfan>=1.0.5"]
+}
